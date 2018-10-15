@@ -1,0 +1,24 @@
+{
+  "name": "satcom",
+  "version": "1.0.0",
+  "description": "Nothing interesting here, just an nodejs project using the Iridium model to transmit messages via satelite. This is the node.js backend running on the device, it will be communicating with a python front end.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/r1cebank/SATCOM.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/r1cebank/SATCOM/issues"
+  },
+  "homepage": "https://github.com/r1cebank/SATCOM#readme",
+  "dependencies": {
+    "babel-eslint": "^10.0.1",
+    "eslint-config-r1cebank": "0.0.6",
+    "fastify": "^1.12.1"
+  }
+}
