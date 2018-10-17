@@ -1,6 +1,10 @@
+const AppSingleton = require('../appsingleton');
+
+const sharedInstance = AppSingleton.getInstance();
+
 async function routes (fastify, options) {
     fastify.get('/status', async (request, reply) => {
-        return { hello: 'world' };
+        return sharedInstance;
     });
 }
 
