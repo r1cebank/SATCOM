@@ -15,6 +15,16 @@ function init () {
         flowControl: true
     });
     sharedInstance.iridium = iridium;
+
+    sharedInstance.sendMessage =  async (message) => {
+        return new Promise((resolve, reject) => {
+            sharedInstance.iridium.sendMessage(message, (error, momsn) => {
+                if (error) { reject(error); }
+                resolve(momsn);
+            });
+        });
+    };
+
     sharedInstance.satcom.status = 'ACQUIRING';
     iridium.on('initialized', () => {
         fastify.log.info('Iridium initialized');

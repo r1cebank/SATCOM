@@ -12,7 +12,8 @@ async function routes (fastify, options) {
         return sharedInstance.db.get('unread').value();
     });
     fastify.post('/satcom/messages', async (request, reply) => {
-        return { hello: 'world' };
+        const momsn = await sharedInstance.sendMessage(request.body.message);
+        return { momsn };
     });
 }
 
