@@ -1,4 +1,4 @@
-from guizero import App, Text, Box, PushButton
+from guizero import App, Text, Box, PushButton, Window, TextBox, ListBox
 
 def do_nothing():
     print("Button was pressed")
@@ -38,7 +38,27 @@ baro_label = Text(app, text="Pressure: ", grid=[0, 8])
 baro = Text(app, text="100 hpa", grid=[1, 8])
 baro.text_color = "green"
 
-button = PushButton(app, text="Send Messages", command=do_nothing, grid=[0, 9])
-button = PushButton(app, text="Check Messages", command=do_nothing, grid=[1, 9])
+sendMessageWindow = Window(app, title="Send Message", width=400, height=80, layout="grid")
+message_label = Text(sendMessageWindow, text="Message: ", grid=[0, 0])
+message_Box = TextBox(sendMessageWindow, width=30 ,grid=[1, 0])
+send_btn = PushButton(sendMessageWindow, text="Send", command=do_nothing, grid=[2, 0])
+
+sendMessageWindow.hide()
+
+messagesWindow = Window(app, title="Messages", width=400, height=300)
+message_label = Text(messagesWindow, text="Messages")
+message_Box = ListBox(messagesWindow)
+message_Box.width = 40
+message_Box.height = 15
+messagesWindow.hide()
+
+
+def show_sendMessage():
+    sendMessageWindow.show()
+def show_messages():
+    messagesWindow.show()
+
+send_message_btn = PushButton(app, text="Send Messages", command=show_sendMessage, grid=[0, 9])
+check_message_btn = PushButton(app, text="Check Messages", command=show_messages, grid=[1, 9])
 
 app.display()
