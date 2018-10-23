@@ -59,7 +59,7 @@ function init () {
             sharedInstance.gps.lng = data.data.gps.lng;
             sharedInstance.sensors = data.data.sensors;
         } catch (error) {
-            iridium.log.error(error);
+            fastify.log.error(error);
         }
     });
 }
