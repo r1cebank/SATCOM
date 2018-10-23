@@ -1,5 +1,7 @@
 const iridium = require('iridium-sbd');
 const fastify = require('fastify')();
+const SerialPort = require('serialport');
+const Readline = require('@serialport/parser-readline');
 
 const AppSingleton = require('./appsingleton');
 
@@ -44,7 +46,22 @@ function init () {
             db.get('unread').push(sateliteMessage).write();
         });
     });
-    // Init I2C connection
+    // Init Serial connection
+    sharedInstance.sensorPort = new SerialPort('/dev/ttyUSB0', {
+        baudRate: 115200
+    });
+    const parser = sharedInstance.sensorPort.pipe(new Readline({ delimiter: '\r\n' }));
+    parser.on('data', (data) => {
+        try {
+            JSON.parse(data);
+            sharedInstance.gps.time = data.data.gps.time;
+            sharedInstance.gps.lat = data.data.gps.lat;
+            sharedInstance.gps.lng = data.data.gps.lng;
+            sharedInstance.sensors = data.data.sensors;
+        } catch (error) {
+            iridium.log.error(error);
+        }
+    });
 }
 
 module.exports = init;

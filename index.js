@@ -22,13 +22,17 @@ sharedInstance.satcom = {
 };
 
 sharedInstance.gps = {
-    coord: 'NOT FIXED'
+    lat: 'NOT FIXED',
+    lng: 'NOT FIXED',
+    time: 'UNKNOWN'
 };
 
 sharedInstance.sensors = {
-    co2: 'N/A',
-    temp: 'N/A',
-    pressure: 'N/A'
+    temperature: -1,
+    pressure: -1,
+    humidity: -1,
+    gasResistance: -1,
+    altitude: -1
 };
 
 fastify.register(require('./routes/status'));
