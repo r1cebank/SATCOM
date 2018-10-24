@@ -47,7 +47,7 @@ fastify.register(require('./routes/session'));
 // Run the server!
 const start = async () => {
     try {
-        await fastify.listen(3939);
+        await fastify.listen(3939, '0.0.0.0');
         init();
         fastify.log.info(`server listening on ${fastify.server.address().port}`);
     } catch (err) {
