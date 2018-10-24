@@ -23,7 +23,7 @@ async function routes (fastify, options) {
             throw new Error('Session id not found');
         }
 
-        if (sharedInstance.gps.time === 'UNKNOWN') {
+        if (sharedInstance.gps.lat === -1) {
             throw new Error('GPS not ready.');
         }
         if (sharedInstance.satcom.status === 'ACQUIRING') {
@@ -57,7 +57,7 @@ async function routes (fastify, options) {
             throw new Error('Session id not found');
         }
 
-        if (sharedInstance.gps.time === 'UNKNOWN') {
+        if (sharedInstance.gps.lat === -1) {
             throw new Error('GPS not ready.');
         }
         if (sharedInstance.satcom.status === 'ACQUIRING') {
