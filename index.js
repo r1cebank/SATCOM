@@ -10,7 +10,8 @@ const db = low(adapter);
 
 db.defaults({
     messages: [],
-    unread: []
+    unread: [],
+    sessions: []
 }).write();
 
 const sharedInstance = AppSingleton.getInstance();
@@ -35,9 +36,13 @@ sharedInstance.sensors = {
     altitude: -1
 };
 
+sharedInstance.sessions = {};
+
+
 fastify.register(require('./routes/status'));
 fastify.register(require('./routes/satcom'));
 fastify.register(require('./routes/sensors'));
+fastify.register(require('./routes/session'));
 
 // Run the server!
 const start = async () => {

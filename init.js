@@ -20,9 +20,17 @@ function init () {
 
     sharedInstance.sendMessage =  async (message) => {
         return new Promise((resolve, reject) => {
-            sharedInstance.iridium.sendMessage(message, (error, momsn) => {
-                if (error) { reject(error); }
-                resolve(momsn);
+            iridium.getSystemTime((err, time) => {
+                const sateliteMessage = {
+                    direction: 'OUTGOING',
+                    message,
+                    timestamp: time
+                };
+                db.get('messages').push(sateliteMessage).write();
+                sharedInstance.iridium.sendMessage(message, (error, momsn) => {
+                    if (error) { reject(error); }
+                    resolve(momsn);
+                });
             });
         });
     };
@@ -39,6 +47,7 @@ function init () {
         fastify.log.info(`Received new message ${message}`);
         iridium.getSystemTime((err, time) => {
             const sateliteMessage = {
+                direction: 'INCOMING',
                 message,
                 timestamp: time
             };

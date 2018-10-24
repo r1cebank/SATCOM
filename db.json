@@ -1,4 +1,16 @@
 {
   "messages": [],
-  "unread": []
+  "unread": [],
+  "sessions": [
+    {
+      "id": "BkyKPDk2p"
+    },
+    {
+      "id": "k5jqaP2bv",
+      "hello": true
+    },
+    {
+      "id": "hRmEfMl3W"
+    }
+  ]
 }
