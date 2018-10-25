@@ -40,8 +40,7 @@ async function routes (fastify, options) {
             sensors: sharedInstance.sensors
         };
 
-        const id1 = await sharedInstance.sendMessage(`${message.sessionId}:${message.gps.lat}:${message.gps.lng}`);
-        const id2 = await sharedInstance.sendMessage(`${message.sensors.temperature}:${message.sensors.pressure}:${message.sensors.humidity}:${message.sensors.gasResistance}:${message.sensors.altitude}:`);
+        const id = await sharedInstance.sendMessage(message);
 
         sharedInstance.sessions[sessionId].hello = true;
         db.get('sessions')
@@ -50,7 +49,7 @@ async function routes (fastify, options) {
         })
         .assign({ hello: true, lastMessage: message })
         .write();
-        return { id1, id2, message };
+        return { id, message };
     });
     fastify.post('/session/sendLocation', async (request, reply) => {
         const sessionId = request.body.sessionId;
@@ -70,7 +69,7 @@ async function routes (fastify, options) {
             gps: sharedInstance.gps
         };
 
-        const id1 = await sharedInstance.sendMessage(`${message.sessionId}:${message.gps.lat}:${message.gps.lng}`);
+        const id = await sharedInstance.sendMessage(JSON.stringify(message));
 
         db.get('sessions')
         .find({
@@ -78,7 +77,7 @@ async function routes (fastify, options) {
         })
         .assign({ hello: true, lastMessage: message })
         .write();
-        return { id1, message };
+        return { id, message };
     });
 }
 
