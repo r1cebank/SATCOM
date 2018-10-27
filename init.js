@@ -1,4 +1,4 @@
-const iridium = require('iridium-sbd');
+const iridium = require('./iridium');
 const fastify = require('fastify')({
     logger: true
 });
