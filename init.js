@@ -27,7 +27,7 @@ function init () {
                     timestamp: time
                 };
                 sharedInstance.db.get('messages').push(sateliteMessage).write();
-                sharedInstance.iridium.sendMessage(JSON.stringify(message), (error, momsn) => {
+                sharedInstance.iridium.sendMessage(message, (error, momsn) => {
                     if (error) { reject(error); }
                     resolve(momsn);
                 });
