@@ -22,17 +22,15 @@ function init () {
 
     sharedInstance.sendMessage =  async (message) => {
         return new Promise((resolve, reject) => {
-            iridium.getSystemTime((err, time) => {
-                const sateliteMessage = {
-                    direction: 'OUTGOING',
-                    message,
-                    timestamp: time
-                };
-                sharedInstance.db.get('messages').push(sateliteMessage).write();
-                sharedInstance.iridium.sendMessage(message, (error, momsn) => {
-                    if (error) { reject(error); }
-                    resolve(momsn);
-                });
+            const sateliteMessage = {
+                direction: 'OUTGOING',
+                message,
+                timestamp: sharedInstance.satcom.time
+            };
+            sharedInstance.db.get('messages').push(sateliteMessage).write();
+            sharedInstance.iridium.sendMessage(message, (error, momsn) => {
+                if (error) { reject(error); }
+                resolve(momsn);
             });
         });
     };
@@ -55,16 +53,14 @@ function init () {
     });
     iridium.on('newmessage', (message, queued) => {
         fastify.log.info(`Received new message ${message}`);
-        iridium.getSystemTime((err, time) => {
-            const sateliteMessage = {
-                direction: 'INCOMING',
-                message,
-                timestamp: time
-            };
-            db.get('messages').push(sateliteMessage).write();
-            db.get('unread').push(sateliteMessage).write();
-            sharedInstance.unread.push(sateliteMessage);
-        });
+        const sateliteMessage = {
+            direction: 'INCOMING',
+            message,
+            timestamp: sharedInstance.satcom.time
+        };
+        db.get('messages').push(sateliteMessage).write();
+        db.get('unread').push(sateliteMessage).write();
+        sharedInstance.unread.push(sateliteMessage);
     });
     // Init Serial connection
     sharedInstance.sensorPort = new SerialPort('/dev/ttyUSB0', {
