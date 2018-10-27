@@ -24,7 +24,7 @@
     "fastify": "^1.12.1",
     "lowdb": "^1.0.0",
     "ntp-client": "^0.5.3",
-    "serialport": "^7.0.2",
+    "serialport": "^4.x",
     "shortid": "^2.2.13"
   }
 }

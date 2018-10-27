@@ -64,7 +64,7 @@ function init () {
     });
     // Init Serial connection
     sharedInstance.sensorPort = new SerialPort('/dev/ttyUSB0', {
-        baudRate: 115200
+        baudrate: 115200
     });
     const parser = sharedInstance.sensorPort.pipe(new Readline({ delimiter: '\r\n' }));
     parser.on('data', (data) => {

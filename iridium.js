@@ -39,7 +39,7 @@ var iridium = {
 	pending:0,
 	globals: {
 		bars:0,
-		baudRate: 19200, //serial baudrate for the RockBlock
+		baudrate: 19200, //serial baudrate for the RockBlock
 		debug: 0, //should send extra debug info to the console
 		defaultTimeout: 60000, // 60 seconds general timeout for all commands
 		simpleTimeout: 2000, // 2 seconds timeout for simple command such as "echo off" (ATE0)
