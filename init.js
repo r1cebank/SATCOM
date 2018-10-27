@@ -50,6 +50,9 @@ function init () {
     iridium.on('debug', (log) => {
         fastify.log.info(`>>> ${log}`);
     });
+    iridium.on('ringalert', () => {
+        iridium.mailboxCheck();
+    });
     iridium.on('newmessage', (message, queued) => {
         fastify.log.info(`Received new message ${message}`);
         iridium.getSystemTime((err, time) => {
