@@ -5,6 +5,7 @@ const sharedInstance = AppSingleton.getInstance();
 async function routes (fastify, options) {
     fastify.get('/status', async (request, reply) => {
         return {
+            unread: sharedInstance.unread,
             satcom: sharedInstance.satcom,
             gps: sharedInstance.gps,
             sensors: sharedInstance.sensors,

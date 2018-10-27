@@ -68,7 +68,7 @@ async function routes (fastify, options) {
         .find({
             id: sessionId
         })
-        .assign({ hello: true, lastMessage: message })
+        .assign({ lastMessage: message })
         .write();
         return { id, message };
     });

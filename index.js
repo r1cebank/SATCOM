@@ -19,7 +19,8 @@ const sharedInstance = AppSingleton.getInstance();
 sharedInstance.db = db;
 
 sharedInstance.satcom = {
-    status: 'UNKNOWN'
+    status: 'UNKNOWN',
+    time: new Date().toLocaleString()
 };
 
 sharedInstance.gps = {
@@ -37,6 +38,8 @@ sharedInstance.sensors = {
 };
 
 sharedInstance.sessions = {};
+
+sharedInstance.unread = sharedInstance.db.get('unread').value();
 
 
 fastify.register(require('./routes/status'));

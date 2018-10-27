@@ -38,6 +38,11 @@ function init () {
     sharedInstance.satcom.status = 'ACQUIRING';
     iridium.on('initialized', () => {
         fastify.log.info('Iridium initialized');
+        setInterval(() => {
+            iridium.getSystemTime((err, time) => {
+                sharedInstance.satcom.time = time.toLocaleString();
+            });
+        }, 10000);
         sharedInstance.satcom.status = 'CONNECTED';
     });
     iridium.on('debug', (log) => {
@@ -53,6 +58,7 @@ function init () {
             };
             db.get('messages').push(sateliteMessage).write();
             db.get('unread').push(sateliteMessage).write();
+            sharedInstance.unread.push(sateliteMessage);
         });
     });
     // Init Serial connection
