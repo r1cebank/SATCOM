@@ -51,44 +51,47 @@ class SATCOM:
         self.clock = clock(1, self.get_data)
         self.app.display()
     def get_data(self):
-        resp = requests.get(url="http://localhost:3939/status")
-        data = resp.json()
-        self.gps.value = "lat: %s lng: %s" % (data['gps']['lat'], data['gps']['lng'])
-        if data['gps']['lat'] == 'NOT FIXED':
-            self.gps.text_color = "red"
-        else:
-            self.gps.text_color = "green"
-        self.satcom_time.value = "SATCOM Time: %s" % data['satcom']['time']
-        self.satelite_status.value = data['satcom']['status']
-        if data['satcom']['status'] == 'ACQUIRING':
-            self.satelite_status.text_color = "red"
-        else:
-            self.satelite_status.text_color = "green"
-        self.satelite_msg.value = len(data['unread'])
-        if len(data['unread']) != 0:
-            self.satelite_msg.text_color = "red"
-        else:
-            self.satelite_msg.text_color = "green"
-        self.temp.value = data['sensors']['temperature']
-        if data['sensors']['temperature'] == -1:
-            self.temp.text_color = "red"
-        else:
-            self.temp.text_color = "green"
-        self.pressure.value = data['sensors']['pressure']
-        if data['sensors']['pressure'] == -1:
-            self.pressure.text_color = "red"
-        else:
-            self.pressure.text_color = "green"
-        self.humidity.value = data['sensors']['humidity']
-        if data['sensors']['humidity'] == -1:
-            self.humidity.text_color = "red"
-        else:
-            self.humidity.text_color = "green"
-        self.altitude.value = data['sensors']['altitude']
-        if data['sensors']['altitude'] == -1:
-            self.altitude.text_color = "red"
-        else:
-            self.altitude.text_color = "green"
+        try:
+            resp = requests.get(url="http://192.168.1.174:3939/status")
+            data = resp.json()
+            self.gps.value = "lat: %s lng: %s" % (data['gps']['lat'], data['gps']['lng'])
+            if data['gps']['lat'] == 'NOT FIXED' or data['gps']['lat'] == -1:
+                self.gps.text_color = "red"
+            else:
+                self.gps.text_color = "green"
+            self.satcom_time.value = "SATCOM Time: %s" % data['satcom']['time']
+            self.satelite_status.value = data['satcom']['status']
+            if data['satcom']['status'] == 'ACQUIRING':
+                self.satelite_status.text_color = "red"
+            else:
+                self.satelite_status.text_color = "green"
+            self.satelite_msg.value = len(data['unread'])
+            if len(data['unread']) != 0:
+                self.satelite_msg.text_color = "red"
+            else:
+                self.satelite_msg.text_color = "green"
+            self.temp.value = data['sensors']['temperature']
+            if data['sensors']['temperature'] == -1:
+                self.temp.text_color = "red"
+            else:
+                self.temp.text_color = "green"
+            self.pressure.value = data['sensors']['pressure']
+            if data['sensors']['pressure'] == -1:
+                self.pressure.text_color = "red"
+            else:
+                self.pressure.text_color = "green"
+            self.humidity.value = data['sensors']['humidity']
+            if data['sensors']['humidity'] == -1:
+                self.humidity.text_color = "red"
+            else:
+                self.humidity.text_color = "green"
+            self.altitude.value = data['sensors']['altitude']
+            if data['sensors']['altitude'] == -1:
+                self.altitude.text_color = "red"
+            else:
+                self.altitude.text_color = "green"
+        except:
+            print("Connection failed")
 
     def send_message(self):
         pass

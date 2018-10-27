@@ -1,5 +1,7 @@
 const iridium = require('iridium-sbd');
-const fastify = require('fastify')();
+const fastify = require('fastify')({
+    logger: true
+});
 const SerialPort = require('serialport');
 const Readline = require('@serialport/parser-readline');
 

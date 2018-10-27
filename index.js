@@ -1,5 +1,7 @@
 // Require the framework and instantiate it
-const fastify = require('fastify')();
+const fastify = require('fastify')({
+    logger: true
+});
 const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
 const AppSingleton = require('./appsingleton');
