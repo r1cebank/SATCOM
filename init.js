@@ -40,11 +40,11 @@ function init () {
     sharedInstance.satcom.status = 'ACQUIRING';
     iridium.on('initialized', () => {
         fastify.log.info('Iridium initialized');
-        setInterval(() => {
-            iridium.getSystemTime((err, time) => {
-                sharedInstance.satcom.time = time.toLocaleString();
-            });
-        }, 10000);
+        // setInterval(() => {
+        //     iridium.getSystemTime((err, time) => {
+        //         sharedInstance.satcom.time = time.toLocaleString();
+        //     });
+        // }, 10000);
         sharedInstance.satcom.status = 'CONNECTED';
     });
     iridium.on('debug', (log) => {
