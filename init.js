@@ -9,8 +9,6 @@ const AppSingleton = require('./appsingleton');
 
 const sharedInstance = AppSingleton.getInstance();
 
-const db = sharedInstance.db;
-
 function init () {
     // Init satelite communication
     iridium.open({
@@ -58,8 +56,8 @@ function init () {
             message,
             timestamp: sharedInstance.satcom.time
         };
-        db.get('messages').push(sateliteMessage).write();
-        db.get('unread').push(sateliteMessage).write();
+        sharedInstance.db.get('messages').push(sateliteMessage).write();
+        sharedInstance.db.get('unread').push(sateliteMessage).write();
         sharedInstance.unread.push(sateliteMessage);
     });
     // Init Serial connection
