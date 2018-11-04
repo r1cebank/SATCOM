@@ -3,6 +3,7 @@ const fastify = require('fastify')({
     logger: true
 });
 const SerialPort = require('serialport');
+const interval = require('interval-promise');
 const Readline = require('@serialport/parser-readline');
 
 const AppSingleton = require('./appsingleton');
@@ -44,11 +45,11 @@ function init () {
         sharedInstance.satcom.status = 'INITIALIZED';
         iridium.waitForNetwork(async () => {
             sharedInstance.satcom.status = 'NETWORK READY';
-            const interval = setInterval(async () => {
+            interval(async (i, stop) => {
                 try {
                     await sharedInstance.sendMessage('ping');
                     sharedInstance.satcom.status = 'READY FOR MESSAGE';
-                    clearInterval(interval);
+                    stop();
                 } catch (e) {
                     sharedInstance.satcom.status = 'PING FAILED';
                 }
