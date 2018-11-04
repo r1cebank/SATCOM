@@ -41,7 +41,15 @@ function init () {
         //         sharedInstance.satcom.time = time.toLocaleString();
         //     });
         // }, 10000);
-        sharedInstance.satcom.status = 'CONNECTED';
+        sharedInstance.satcom.status = 'INITIALIZED';
+        iridium.waitForNetwork(() => {
+            sharedInstance.satcom.status = 'NETWORK READY';
+            try {
+                await sharedInstance.sendMessage('ping');
+            } catch (e) {
+                sharedInstance.satcom.status = 'PING FAILED';
+            }
+        });
     });
     iridium.on('debug', (log) => {
         fastify.log.info(`>>> ${log}`);
