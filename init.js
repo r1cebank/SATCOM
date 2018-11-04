@@ -42,7 +42,7 @@ function init () {
         //     });
         // }, 10000);
         sharedInstance.satcom.status = 'INITIALIZED';
-        iridium.waitForNetwork(() => {
+        iridium.waitForNetwork(async () => {
             sharedInstance.satcom.status = 'NETWORK READY';
             try {
                 await sharedInstance.sendMessage('ping');
