@@ -46,6 +46,7 @@ function init () {
             sharedInstance.satcom.status = 'NETWORK READY';
             try {
                 await sharedInstance.sendMessage('ping');
+                sharedInstance.satcom.status = 'READY FOR MESSAGE';
             } catch (e) {
                 sharedInstance.satcom.status = 'PING FAILED';
             }
