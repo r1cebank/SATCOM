@@ -44,12 +44,15 @@ function init () {
         sharedInstance.satcom.status = 'INITIALIZED';
         iridium.waitForNetwork(async () => {
             sharedInstance.satcom.status = 'NETWORK READY';
-            try {
-                await sharedInstance.sendMessage('ping');
-                sharedInstance.satcom.status = 'READY FOR MESSAGE';
-            } catch (e) {
-                sharedInstance.satcom.status = 'PING FAILED';
-            }
+            const interval = setInterval(async () => {
+                try {
+                    await sharedInstance.sendMessage('ping');
+                    sharedInstance.satcom.status = 'READY FOR MESSAGE';
+                    clearInterval(interval);
+                } catch (e) {
+                    sharedInstance.satcom.status = 'PING FAILED';
+                }
+            }, 10000);
         });
     });
     iridium.on('debug', (log) => {
