@@ -66,7 +66,7 @@ function init () {
         fastify.log.info(`Received new message ${message}`);
         const sateliteMessage = {
             direction: 'INCOMING',
-            message.toString(),
+            message: message.toString(),
             timestamp: sharedInstance.satcom.time
         };
         sharedInstance.db.get('messages').push(sateliteMessage).write();
