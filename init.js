@@ -80,11 +80,22 @@ function init () {
     const parser = sharedInstance.sensorPort.pipe(new Readline({ delimiter: '\r\n' }));
     parser.on('data', (data) => {
         try {
-            const parsedData = JSON.parse(data);
-            sharedInstance.gps.time = parsedData.data.gps.time;
-            sharedInstance.gps.lat = parsedData.data.gps.lat;
-            sharedInstance.gps.lng = parsedData.data.gps.lng;
-            sharedInstance.sensors = parsedData.data.sensors;
+            const dataFrames = data.split(' ');
+            const gpsData = dataFrames[0].split(',');
+            const sensorData = dataFrames[1].split(',');
+            sharedInstance.gps = {
+                status: gpsData[0],
+                lat: gpsData[1],
+                lng: gpsData[2],
+                time: gpsData[3]
+            };
+            sharedInstance.sensors = {
+                temperature: sensorData[0],
+                pressure: sensorData[1],
+                humidity: sensorData[2],
+                gasResistance: sensorData[3],
+                altitude: sensorData[4]
+            };
         } catch (error) {
             fastify.log.error(error);
         }
