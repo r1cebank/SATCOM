@@ -52,7 +52,7 @@ class SATCOM:
         self.app.display()
     def get_data(self):
         try:
-            resp = requests.get(url="http://192.168.1.174:3939/status")
+            resp = requests.get(url="http://localhost:3939/status")
             data = resp.json()
             self.gps.value = "lat: %s lng: %s" % (data['gps']['lat'], data['gps']['lng'])
             if data['gps']['lat'] == 'NOT FIXED' or data['gps']['lat'] == -1:
