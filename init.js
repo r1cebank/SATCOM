@@ -80,6 +80,8 @@ function init () {
     const parser = sharedInstance.sensorPort.pipe(new Readline({ delimiter: '\r\n' }));
     parser.on('data', (data) => {
         try {
+            data.replace('[', '');
+            data.replace(']', '');
             const dataFrames = data.split(' ');
             const gpsData = dataFrames[0].split(',');
             const sensorData = dataFrames[1].split(',');
